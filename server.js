@@ -1,7 +1,6 @@
-import cors from "cors"
 import { config } from "dotenv";
-import dbConnect from "./database/data";
-import {app} from "./index"
+import dbConnect from "./database/data.js";
+import {app} from "./index.js"
 
 dbConnect();
 
@@ -10,10 +9,9 @@ config({
 })
 
 const PORT=4000 || process.env.PORT
-app.use(cors());
 
 app.get("/",(req,res)=>{
-    res.json("hey")
+    res.send("api working")
 })
 
 app.listen(PORT,()=>{

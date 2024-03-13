@@ -1,13 +1,17 @@
 import mongoose from "mongoose";
+
 const userSchema = new mongoose.Schema({
   name: {
-    String,
-    require: true,
+    type: String, 
+    required: true, 
     unique: true,
   },
   email: {
-    String,
-    require: true,
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
   },
   photo: {
     url: {
@@ -16,16 +20,16 @@ const userSchema = new mongoose.Schema({
   },
   teams: [
     {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Team' 
-    }
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Team",
+    },
   ],
-  data:[
+  data: [
     {
-        type:mongoose.Schema.Types.ObjectId,
-        ref: 'Document'
-    }
-  ]
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Document",
+    },
+  ],
 });
 
-export const User = mongoose.model("user", userSchema);
+export const User = mongoose.model("User", userSchema); // Corrected the model name to start with an uppercase letter

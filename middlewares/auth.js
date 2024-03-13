@@ -1,21 +1,28 @@
-import admin from "../config/firebaseadmin";
-class Middleware {
+import admin from "../config/firebaseadmin.js";
+import { User } from "../models/user.js";
+class AuthMiddleware {
   async decodeToken(req, res, next) {
-    const token = req.headers.authorization.split(" ")[1];
+    console.log(req.headers);
+    const authorizationHeader = req.headers.authorization;
 
-    try {
-      const decodedToken = await admin.auth().verifyIdToken(token);
-      console.log(decodedToken);
+    if (authorizationHeader) {
+      const token = req.headers.authorization.split(" ")[1];
+      console.log(token);
+      try {
+        const decodedToken = await admin.auth().verifyIdToken(token);
+        console.log("decode", decodedToken);
 
-      if (decodedToken) {
-        return next();
+        if (decodedToken) {
+          req.user=await User.find({email:decodedToken.email})
+          return next();
+        }
+        res.json({ message: "unauthorized" });
+      } catch (e) {
+        console.error(e);
+        res.status(500).json({ message: "Internal Server Error" });
       }
-      res.json({ message: "unauthorized" });
-    } catch (e) {
-      console.error(e);
-      res.status(500).json({ message: "Internal Server Error" });
-    }
+    }else res.status(401).json({ error: 'Unauthorized: Missing Authorization header' });
   }
 }
 
-export default new Middleware();
+export default new AuthMiddleware();
