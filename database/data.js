@@ -1,8 +1,13 @@
 import mongoose from "mongoose";
+import { config } from "dotenv";
+
+config({
+    path:"./../config.env"
+})
 
 async function dbConnect(){
     mongoose.connect
-    (process.env.MONGO_URI || 'mongodb+srv://yadavankit20062000:WqkO3Yy0fzZHgpj8@cluster0.n1zrzma.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp',{dbName:"fdrive"})
+    (process.env.MONGO_URI,{dbName:"fdrive"})
     .then((c)=>console.log(`Database connected with ${c.connection.host}`))
     .catch(err=>console.log(err));
 }
