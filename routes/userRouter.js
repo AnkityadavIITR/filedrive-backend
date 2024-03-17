@@ -1,8 +1,7 @@
 import express from "express"
 import bodyParser from "body-parser";
 import auth from "../middlewares/auth.js";
-import { User } from "../models/user.js";
-import { addUser } from "../controlers/user.js";
+import { addUser, updateUser } from "../controlers/user.js";
 
 const router=express.Router();
 
@@ -11,7 +10,9 @@ router.use(express.json())
 
 
 router.post("/register",auth.decodeToken,addUser);
+router.patch("/verifyEmail",auth.decodeToken,updateUser);
 
-router.post("/login",au)
+
+
 
 export default router;

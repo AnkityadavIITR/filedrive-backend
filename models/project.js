@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const documentSchema = new mongoose.Schema({
+const fileSchema = new mongoose.Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
   owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
@@ -7,5 +7,5 @@ const documentSchema = new mongoose.Schema({
   creationDate: { type: Date, default: Date.now, required:true },
   sharedWith: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 });
-const Document=mongoose.model("Document",documentSchema);
+const Document=mongoose.model("File",fileSchema);
 export default Document;

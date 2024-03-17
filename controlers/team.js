@@ -1,5 +1,5 @@
-import { Team} from "../models/team";
-import { User } from "../models/user";
+import { Team} from "../models/team.js";
+import { User } from "../models/user.js";
 import { nanoid } from "nanoid";
 
 export async function createTeam(req,res){
@@ -42,7 +42,7 @@ export async function inviteTeam(req,res){
 export async function joinTeam(req,res){
     const { shortId} = req.body;
     try{
-
+        
     }catch(e){
 
     }

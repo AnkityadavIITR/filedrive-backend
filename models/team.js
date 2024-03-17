@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { boolean } from "yup";
 const teamSchema = new mongoose.Schema({
   name: { type: String, required: true },
   creator: {
@@ -10,9 +9,9 @@ const teamSchema = new mongoose.Schema({
   members: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   creationDate: { type: Date, default: Date.now },
   description: { type: String },
-  documents: [{ type: mongoose.Schema.Types.ObjectId, ref: "Document" }],
+  documents: [{ type: mongoose.Schema.Types.ObjectId, ref: "File" }],
   shortId: { type: String,  unique: true, required:true },
-  editor:{type:boolean,require:true}
+  editor:{type:Boolean,require:true}
 });
 
 export const Team = mongoose.model("Team", teamSchema);

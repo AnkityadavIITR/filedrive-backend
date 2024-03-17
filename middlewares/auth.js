@@ -11,17 +11,13 @@ class AuthMiddleware {
       try {
         const decodedToken = await admin.auth().verifyIdToken(token);
         console.log("decode", decodedToken);
+        next();
 
-        if (decodedToken) {
-          req.user=await User.find({email:decodedToken.email})
-          return next();
-        }
-        res.json({ message: "unauthorized" });
       } catch (e) {
         console.error(e);
-        res.status(500).json({ message: "Internal Server Error" });
+        return res.status(500).json({ message: "Internal Server Error" });
       }
-    }else res.status(401).json({ error: 'Unauthorized: Missing Authorization header' });
+    }else return res.status(401).json({ error: 'Unauthorized: Missing Authorization header' });
   }
 }
 

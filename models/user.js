@@ -10,6 +10,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  emailVerified:{
+    type:Boolean,
+    required:true,
+  },
   password: {
     type: String,
   },
@@ -24,7 +28,7 @@ const userSchema = new mongoose.Schema({
       ref: "Team",
     },
   ],
-  data: [
+  files: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Document",
