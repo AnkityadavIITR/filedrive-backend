@@ -31,9 +31,10 @@ const userSchema = new mongoose.Schema({
   files: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Document",
+      ref: "File",
     },
   ],
+  
 });
 
-export const User = mongoose.model("User", userSchema); // Corrected the model name to start with an uppercase letter
+export const User = mongoose.model("User", userSchema); 

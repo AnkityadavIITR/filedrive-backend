@@ -5,7 +5,7 @@ const fileSchema = new mongoose.Schema({
   owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   team: { type: mongoose.Schema.Types.ObjectId, ref: "Team" },
   creationDate: { type: Date, default: Date.now, required:true },
-  sharedWith: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  // sharedWith: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 });
-const Document=mongoose.model("File",fileSchema);
-export default Document;
+const File=mongoose.model("File",fileSchema);
+export default File;
