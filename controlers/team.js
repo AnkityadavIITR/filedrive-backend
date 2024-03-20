@@ -76,31 +76,47 @@ export const getTeamData=async (req, res) => {
     }
 }
 
-export const deleteTeamData=async (req, res) => {
+export const deleteTeamData = async (req, res) => {
     const { teamId, fileId } = req.params;
+    console.log("teamId", teamId, "fileid", fileId);
 
     try {
-        const team = await Team.findById(teamId);
-
+        const team = await Team.findById(teamId).populate('files');
+        console.log(team);
         if (!team) {
             return res.status(404).json({
                 success: false,
                 message: "Team not found"
             });
         }
-        const index = team.files.indexOf(fileId);
+
+        // Filter out the deleted files
+        const undeletedFiles = team.files.filter(file => !file.deleted);
+
+        const file = undeletedFiles.find(file => file._id == fileId);
+        if (!file) {
+            return res.status(404).json({
+                success: false,
+                message: "File not found in team"
+            });
+        }
+
+        const index = undeletedFiles.indexOf(file);
+        console.log("ind", index);
         if (index === -1) {
             return res.status(404).json({
                 success: false,
                 message: "File not found in team"
             });
         }
-        team.files.splice(index, 1);
+
+        undeletedFiles.splice(index, 1);
         await team.save();
 
         return res.status(200).json({
             success: true,
-            message: "File deleted successfully from team"
+            message: "File deleted successfully from team",
+            undeletedFiles: undeletedFiles // Return the undeleted files array
         });
     } catch (error) {
         console.error("Error:", error);
@@ -108,13 +124,15 @@ export const deleteTeamData=async (req, res) => {
     }
 }
 
+
+
 export const uploadTeamFile=async(req,res)=>{
     const { teamId } = req.params;
-    const { title,content } = req.body;
+    const { title,content,type } = req.body;
     const userId = req.user._id;
     try{
     // Create a new file document with the provided data
-    const file = await File.create({title:title, content: content, owner: userId });
+    const file = await File.create({title:title, content: content,type:type, owner: userId });
     // Obtain the ID of the newly created file
     const fileId = file._id;
     // Find the team by its ID

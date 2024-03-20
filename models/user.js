@@ -34,7 +34,13 @@ const userSchema = new mongoose.Schema({
       ref: "File",
     },
   ],
-  
+  deleted: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "File",
+    },
+  ],
+
 });
 
 export const User = mongoose.model("User", userSchema); 
