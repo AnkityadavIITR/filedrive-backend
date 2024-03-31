@@ -116,7 +116,7 @@ export const deleteTeamData = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "File deleted successfully from team",
-            undeletedFiles: undeletedFiles // Return the undeleted files array
+            files: undeletedFiles // Return the undeleted files array
         });
     } catch (error) {
         console.error("Error:", error);
