@@ -1,6 +1,7 @@
 import { config } from "dotenv";
 import dbConnect from "./database/data.js";
 import {app} from "./index.js"
+
 config({})
 
 dbConnect();
