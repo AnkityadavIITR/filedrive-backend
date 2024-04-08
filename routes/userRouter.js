@@ -11,6 +11,12 @@ router.use(express.json())
 
 router.post("/register",auth.decodeToken,addUser);
 router.patch("/verifyEmail",auth.decodeToken,updateUser);
+router.get("/health-route",(req,res)=>{
+    return res.status(200).json({
+        success:true,
+        message:"server is wroking"
+    })
+})
 
 router.get("/teams",auth.decodeToken,getTeams);
 
